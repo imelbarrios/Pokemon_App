@@ -1,0 +1,23 @@
+<resources>
+    <string name="facebook_app_id">398099970844507</string>
+    <string name="fb_login_protocol_scheme">fb398099970844507</string>
+    <string name="app_name">Pokemon_App</string>
+    <string name="bienvenido">Bienvenido!!</string>
+    <string name="img_fondo">img_fondo</string>
+    <string name="todo">TODO</string>
+    <string name="ingrese_su_email">Ingrese su Email</string>
+    <string name="registrarse">Registartse</string>
+    <string name="ingrese_su_password">Ingrese su Password</string>
+    <string name="cerrar_sesion">Cerrar Sesion</string>
+    <string name="tipo">Tipo:</string>
+    <string name="s">s</string>
+    <string name="altura">Altura:</string>
+    <string name="peso">Peso:</string>
+    <string name="img_fondos">img_fondos</string>
+    <string name="_2222">2222</string>
+    <string name="_333">333</string>
+    <string name="www">www</string>
+    <string name="detalles">Detalles</string>
+    <string name="listado_de_pokemon">Listado de Pokemon</string>
+    <string name="ultimos_5_vistos">Ultimos 5 vistos</string>
+</resources>
