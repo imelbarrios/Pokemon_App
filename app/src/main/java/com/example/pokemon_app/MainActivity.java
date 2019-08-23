@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText TextPassword;
     private Button registerBtn;
     private Button loginBtn;
+    private Button fbBtn;
+
     private ProgressDialog progressDialog;
 
     private FirebaseAuth firebaseAuth;
@@ -39,10 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextPassword = (EditText) findViewById(R.id.text_password);
         registerBtn = (Button) findViewById(R.id.register_button);
         loginBtn = (Button) findViewById(R.id.btn_login);
+        fbBtn = (Button) findViewById(R.id.init_fb);
 
         progressDialog = new ProgressDialog(this);
         registerBtn.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
+        fbBtn.setOnClickListener(this);
 
     }
         private void registerUser() {
@@ -111,11 +115,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void updateUI(FirebaseUser user) {
         if(user != null){
 
-            Intent intent = new Intent(this, MenuActivity.class);
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             startActivity(intent);
+            finish();
         }else{
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
@@ -132,6 +138,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String email = TextEmail.getText().toString().trim();
             String password = TextPassword.getText().toString().trim();
             signIn(email, password);
+        }
+
+        if(i == R.id.init_fb){
+            Intent intent = new Intent(MainActivity.this, FacebookLoginAct.class);
+            startActivity(intent);
+            finish();
         }
 
     }

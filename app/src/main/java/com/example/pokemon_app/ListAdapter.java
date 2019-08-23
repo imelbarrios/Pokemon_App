@@ -1,5 +1,6 @@
 package com.example.pokemon_app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,46 +13,43 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.pokemon_app.models.PokemonModel;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder> {
-    private List<PokemonModel> items;
+
+   private ArrayList<PokemonModel> items;
     private Context context;
+    String img;
 
-    public static class ListViewHolder extends RecyclerView.ViewHolder{
-        public CardView itemCard;
-        public ImageView imagen;
-        public TextView nombre;
-        public TextView descrip;
+    private ProgressDialog progressDialog;
 
-        public ListViewHolder(View v){
-            super(v);
-            itemCard = (CardView) v.findViewById(R.id.item_row);
-            imagen = (ImageView) v.findViewById(R.id.img_pokemon);
-            nombre = (TextView) v.findViewById(R.id.name_pokemon);
-            descrip = (TextView) v.findViewById(R.id.descri_pokemon);
-
-
-        }
+    public ListAdapter(Context context){
+        this.context = context;
+        items = new ArrayList<>();
     }
+
+
 
     @Override
     public int getItemCount() {
         return items.size();
     }
 
-    public ListAdapter(List<PokemonModel> items){
-        this.items = items;
+
+    public void adiccionarListado(ArrayList<PokemonModel> listaPokemon){
+        items.addAll(listaPokemon);
+        notifyDataSetChanged();
     }
 
-    public List<PokemonModel> getItems(){
-        return this.items;
-    }
+
+
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup viewGroup,int i) {
@@ -61,25 +59,47 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder viewHolder, final int i) {
-
+    public void onBindViewHolder(ListViewHolder viewHolder,final int i) {
         viewHolder.nombre.setText(items.get(i).getName());
-        viewHolder.imagen.setImageResource(items.get(i).getUrl());
-        viewHolder.descrip.setText("Descripcion: " + items.get(i).getDesciption());
+
+        Glide.with(context)
+                .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/" + items.get(i).getId() + ".png")
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(viewHolder.imagen);
+
 
         viewHolder.itemCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("curImagen", items.get(i).getUrl());
+                img = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/" + items.get(i).getId() + ".png";
+                bundle.putString("curImagen", img);
                 bundle.putString("curNombre", items.get(i).getName());
-                bundle.putString("curDescripcion", items.get(i).getDesciption());
-                Intent iconIntent = new Intent(view.getContext(), DescrpLisActivity.class);
+                Intent iconIntent = new Intent(view.getContext(), DescripActivity.class);
                 iconIntent.putExtras(bundle);
                 view.getContext().startActivity(iconIntent);
             }
         });
 
+    }
+
+    public  class ListViewHolder extends RecyclerView.ViewHolder{
+
+        public CardView itemCard;
+        public ImageView imagen;
+        public TextView nombre;
+
+
+        public ListViewHolder(View v){
+            super(v);
+            itemCard = (CardView) v.findViewById(R.id.item_row);
+            imagen = (ImageView) v.findViewById(R.id.img_pokemon);
+            nombre = (TextView) v.findViewById(R.id.name_pokemon);
+
+
+
+        }
     }
 
 
