@@ -1,5 +1,4 @@
 package com.example.pokemon_app;
-
 import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
